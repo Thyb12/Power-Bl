@@ -42,7 +42,7 @@ function App() {
     return (
         <div>
             <div className="App">
-                <Charts originalData={originalData} csvData={csvData} />
+                <Charts csvData={csvData} />
                 {/* Entrée de téléchargement de fichier */}
                 <input type="file" accept=".csv" onChange={handleFileUpload} />
             </div>

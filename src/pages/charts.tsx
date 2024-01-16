@@ -23,12 +23,7 @@ const Charts: React.FC<ChartsProps> = ({ csvData }) => {
     console.log('Columns:', columns);
 
     // Extraire les informations des deux colonnes spécifiques ("Age" et "Année")
-    const tableData: TransformedData[] = csvData.map((item: Record<string, string>) => {
-        if (!item || !columns || columns.length < 2) {
-            console.error('Invalid data or columns:', item, columns);
-            return null;
-        }
-
+    const tableData: (null | { year: string; age: number })[] = csvData.map((item: Record<string, string>) => {
         const ageString = item[columns[0]];
         const yearString = item[columns[1]];
 
@@ -40,11 +35,15 @@ const Charts: React.FC<ChartsProps> = ({ csvData }) => {
             return null;
         }
 
+        // Extraire la partie entière de l'âge
+        const ageParts = ageString.split(',');
+        const integerAge = ageParts.length > 0 ? parseInt(ageParts[0].replace(/\s/g, ''), 10) : NaN;
+
         return {
             year: yearString,
-            age: parseFloat(ageString.replace(/\s/g, '').replace(' ', '').replace(',', '.')),
+            age: integerAge,
         };
-    }).filter(Boolean);
+    }).filter(entry => entry !== null && !isNaN(entry.age));
 
     console.log('Table data:', tableData);
 
@@ -56,7 +55,6 @@ const Charts: React.FC<ChartsProps> = ({ csvData }) => {
     console.log('CSV:', csvData);
     console.log('Data:', props.data);
     console.log('KEYS:', columns);
-
 
     // Render le tableau avec les informations des deux colonnes spécifiques
     return (

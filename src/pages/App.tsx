@@ -1,53 +1,62 @@
 // File: App.tsx
-import React, { useState } from 'react';
-import '../App.css';
-import Charts from "./charts";
+import React, { useState } from "react";
+import "../App.css";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import Papa from "papaparse";
 
 function App() {
-    const [csvData, setCsvData] = useState<any[]>([]);
-    const [originalData, setOriginalData] = useState<any[]>([
-        { year: '1991', value: 3 },
-        { year: '1992', value: 4 },
-        // ... autres entrées originalData
-    ]);
+	// State to store parsed data
+	const [parsedData, setParsedData] = useState([]);
 
-    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
+	//State to store table Column name
+	const [tableRows, setTableRows] = useState([]);
 
-        if (file) {
-            // Lire le contenu du fichier
-            file.text().then((text: string) => {
-                // Parser les données CSV
-                const rows = text.split('\n');
-                const headers = rows[0].split('\t'); // Utilisez le séparateur approprié
+	//State to store the values
+	const [values, setValues] = useState([]);
 
-                const parsedData = rows.slice(1).map((row: string) => {
-                    const columns = row.split('\t'); // Utilisez le séparateur approprié
+	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files && event.target.files[0];
 
-                    // Créer un objet avec des clés dynamiques basées sur les en-têtes
-                    const rowData: { [key: string]: string } = {};
-                    headers.forEach((header, index) => {
-                        rowData[header] = columns[index];
-                    });
+		if (file) {
+			Papa.parse(file, {
+				header: true,
+				skipEmptyLines: true,
+				complete: function (results: any) {
+					//   const rowsArray:any = [];
+					//   const valuesArray:any = [];
 
-                    return rowData;
-                });
+					// Iterating data to get column name and their values
+					//   results.data.map((d) => {
+					//     rowsArray.push(Object.keys(d));
+					//     valuesArray.push(Object.values(d));
+					//   });
 
-                // Mettre à jour l'état avec les données CSV
-                setCsvData(parsedData);
-            });
-        }
-    };
+					// Parsed Data Response in array format
+					setParsedData(results?.data);
 
-    return (
-        <div>
-            <div className="App">
-                <Charts csvData={csvData} />
-                {/* Entrée de téléchargement de fichier */}
-                <input type="file" accept=".csv" onChange={handleFileUpload} />
-            </div>
-        </div>
-    );
+					//   // Filtered Column Names
+					//   setTableRows(rowsArray[0]);
+
+					//   // Filtered Values
+					//   setValues(valuesArray);
+				},
+			});
+		}
+	};
+
+	return (
+		<div>
+			<div className="App">
+				<input type="file" accept=".csv" onChange={handleFileUpload} />
+			</div>
+			<LineChart width={800} height={400} data={parsedData}>
+				<Line type="monotone" dataKey="Age" stroke="#8884d8" />
+				<CartesianGrid stroke="#ccc" />
+				<XAxis dataKey="Année" />
+				<YAxis />
+			</LineChart>
+		</div>
+	);
 }
 
 export default App;

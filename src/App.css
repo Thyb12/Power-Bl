@@ -1,38 +1,102 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.BoardCostum {
+	background-image: url("./assets/Presta-DataViz.png");
+	background-color: rgb(60, 8, 108);
+	background-size: cover;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+	color: white;
+}
+
+ul {
+	display: flex;
+	justify-content: space-between;
+	color: white;
+	font-size: large;
+}
+
+.InputCustom {
+	height: 2rem;
+	width: 20rem;
+	border-radius: 20px;
+	position: relative;
+	border: 1px solid white;
+	box-shadow: 3px 3px 5px #888888;
+	font-size: medium;
+	padding-left: 1rem;
+	margin-bottom: 2rem;
+	font-family: monospace;
+}
+
+.RadioClass {
+	margin-left: 2rem;
+	margin-bottom: 2rem;
+	cursor: pointer;
+}
+
+input {
+	margin-left: 1rem;
+}
+
+.TitleCustom {
+	color: white;
+	overflow: hidden; /* Pour masquer les mots qui dépassent la largeur spécifiée */
+	white-space: nowrap; /* Pour éviter que les mots ne passent à la ligne */
+	border-right: 2px solid white; /* Simulation d'un curseur de texte */
+	animation: typing 4s steps(30) infinite; /* Animation de saisie */
+}
+
+@keyframes typing {
+	from {
+		width: 0;
+	}
+	to {
+		width: 45rem;
+	}
+}
+
+hr {
+	width: 25rem;
+	margin-bottom: 3rem;
 }

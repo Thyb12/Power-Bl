@@ -1,3 +1,4 @@
+//import
 import React, { useState } from "react";
 import "../App.css";
 import {
@@ -10,8 +11,6 @@ import {
 	Bar,
 	Tooltip,
 	BarChart,
-	RadialBarChart,
-	RadialBar,
 	AreaChart,
 	Area,
 } from "recharts";
@@ -19,8 +18,8 @@ import Papa from "papaparse";
 import Button from "@mui/joy/Button";
 import SvgIcon from "@mui/joy/SvgIcon";
 import { styled } from "@mui/joy";
-import { Icon } from "@mui/material";
 
+//Style
 const VisuallyHiddenInput = styled("input")`
 	clip: rect(0 0 0 0);
 	clip-path: inset(50%);
@@ -39,19 +38,25 @@ const UploadCustom = styled("div")`
 	position: relative;
 `;
 
+//Use State
 const App = () => {
+	// home to upload screen
 	const [showUploader, setShowUploader] = useState(false);
+	//upload Data
 	const [parsedData, setParsedData] = useState([]);
+	// Table Part
 	const [lineVar, setLineVar] = useState<string>("");
 	const [axisX, setAxisX] = useState<string>("");
 	const [axisY, setAxisY] = useState<string>("");
 	const [tableRows, setTableRows] = useState([]);
 	const [selectedChartType, setSelectedChartType] = useState("");
 
+	// Home Button
 	const handleButtonClick = () => {
 		setShowUploader(true);
 	};
 
+	//Changer variable de Chart
 	const handleVarChanges = (varName: string, value: string) => {
 		if (varName === "lineVar") {
 			setLineVar(value);
@@ -62,10 +67,12 @@ const App = () => {
 		}
 	};
 
+	//Changer variable du Chart
 	const handleChartTypeChange = (chartType: string) => {
 		setSelectedChartType(chartType);
 	};
 
+	//Upload file
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files && event.target.files[0];
 
@@ -87,7 +94,7 @@ const App = () => {
 			});
 		}
 	};
-
+	//Appel composant
 	return (
 		<div
 			className={`BoardCostum ${showUploader ? "blackBackground" : ""}`}
